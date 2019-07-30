@@ -1,1 +1,17 @@
-<h1>welcome to our page</h1>
+{{#if message}}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{message}}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{{/if}}
+<img src="/images/backpic2.jpg"  alt="Responsive image" id="myImage">
+<div class="content">
+    <h1 class="display-4">BikeShare Today</h1>
+    <h4>Start sharing your bike today on our first ever consumer to consumer platform</h4>
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</div>

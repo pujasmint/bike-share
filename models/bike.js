@@ -9,14 +9,14 @@ const bikeSchema = new Schema({
   availbility: { type: String },
   rentPerDay: { type: String },
   minRentalDay: { type: Number},
-  location: { type: Number, type: String},
-  Contact: { type: Number, required: true },
+  location: { type: String},
+  contact: { type: Number},
   description: {type: String},
-  bike_image: {type: String},
-  owner: { type : ObjectId, ref: 'users' },
-  bookings: [{type: ObjectId, ref: "bookings"}]
+  doc: { data: Buffer, contentType: String },
+  user: { type : ObjectId, ref: 'users' },
+  // booking: [{type: ObjectId, ref: "bookings"}]
 });
 
-const bike = mongoose.model("bikes", bikeSchema);
+const Bike = mongoose.model("bikes", bikeSchema);
 
-module.exports = bike;
+module.exports = Bike;

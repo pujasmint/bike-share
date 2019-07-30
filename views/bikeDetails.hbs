@@ -1,0 +1,44 @@
+<h1>{{viewTitle}}</h1>
+
+<form action="/bikeDetails" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label>Bike Type</label>
+        <input type="text" class="form-control" name="type" required>
+    </div>
+    <div class="form-group">
+        <label>Condition</label>
+        <input type="text" class="form-control" name="condition" required>
+    </div>
+    <div class="form-group col-md-6">
+        <label>Availbility</label>
+        <input type="text" class="form-control" name="availbility" required>
+    </div>
+    <div class="form-group col-md-6">
+        <label>Rent Per Day</label>
+        <input type="text" class="form-control" name="rentPerDay" required>
+    </div>
+    <div class="form-group col-md-6">
+        <label>Minimum Rental Day</label>
+        <input type="number" class="form-control" name="minRentalDay" required>
+    </div>
+    <div class="form-group col-md-6">
+        <label>Location</label>
+        <input type="text" class="form-control" name="location" required>
+    </div>
+    <div class="form-group col-md-6">
+        <label>Contact</label>
+        <input type="number" class="form-control" name="contact" required>
+    </div>
+    <div class="form-group col-md-6">
+        <label>description</label>
+        <input type="text" class="form-control" name="description" required>
+    </div>
+    <div class="form-group">
+        <label for="doc">Bike Imagae</label>
+        <input type="file" name="doc" id="doc" required>
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-info"><i class="fa fa-database"></i>Submit</button>
+    </div>
+</form>

@@ -1,76 +1,67 @@
 * {
   margin: 0;
-}
-
-body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
-}
-
-#form {
-  margin: 20px;
-  width: 50%;
-}
-
-#form label {
-  color: #666;
-  margin-bottom: 10px;
-  width: 100%;
-}
-
-#form input,
-#form button {
+  padding: 0;
   box-sizing: border-box;
-  font-size: 14px;
-  outline: 0;
-  padding: 4px;
+  font-family: "Concert One", cursive;
+}
+
+nav {
+  z-index: 1;
+}
+
+.navbar-brand img {
+  width: 48px;
+}
+
+#myImage {
+  position: fixed;
+  top: 50px;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.content {
+  position: fixed;
+  bottom: 33%;
+  background: rgba(0, 0, 0, 0.7);
+  color: #f1f1f1;
   width: 100%;
-  margin-bottom: 20px;
+  padding: 20px;
+  z-index: 1;
 }
 
-#form button {
-  background: #43a3e6;
-  border: 1px solid #43a3e6;
-  border-radius: 4px;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 14px;
-  padding: 8px 16px;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: .3s ease background;
+.content input[type="search"] {
+  max-width: 75%;
+}
+
+.profile-card {
+  flex-direction: row;
+}
+
+.profile-card .card-img-top {
+  width: 20%;
+}
+
+.profile-card .list-group {
   width: 100%;
 }
 
-#form button:hover {
-  background: #fff;
-  color: #43a3e6;
-  transition: .3s ease background;
-}
-
-.topnav {
-  color: white;
+.profile-card .card-bottom {
+  width: 80%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: lightseagreen;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
 }
 
-.topnav img {
-  width: 82px;
-  margin: 10px;
+.bikelist {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding: 10px;
+  margin-right: 20px;
+  justify-content: space-around;
+  
 }
-
-.topnav button {
-  width: 100px;
-  height: 35px;
-  background-color: black;
-  font-size: 20px;
-  text-decoration: none;
-}
-
-

@@ -1,0 +1,37 @@
+<h1 class="display-4">Sign Up</h1>
+{{#if errorMessage}}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>{{errorMessage}}</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/if}}
+<form action="/signup" method="POST" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" required id="username" name="username" placeholder="Enter username">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" required name="password" placeholder="Enter password">
+  </div>
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control" id="email" name="email" required placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label for="contact">Mobile Number</label>
+    <input type="tel" class="form-control" id="contact" name="contact" required placeholder="Enter contact number">
+  </div>
+  <div class="form-group">
+    <label for="zip_code">Post Code</label>
+    <input type="text" class="form-control" id="zip_code" name="zip_code" required placeholder="Enter post code">
+  </div>
+  <div class="form-group">
+    <label for="doc">Upload one identification</label>
+    <input type="file" name="doc" id="doc" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
