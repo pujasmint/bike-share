@@ -1,0 +1,17 @@
+<h1 class="display-4">
+    {{ listHeading }}</h1>
+<div class="bike-list">
+    {{#each bikes}}
+    <div class="card mb-2 mr-2 bike-card">
+        <img src="data:image/jpeg;base64,{{this.imgPath}}" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title">{{this.bike.type}}</h5>
+            <p class="card-text">This is <strong>{{this.bike.type}}</strong> bike in <strong>{{this.bike.condition}}</strong>
+                condition available from {{this.bike.availability}}</p>
+
+            <a href="/reserve/{{this.bike._id}}" class="btn btn-success btn-lg btn-block">Reserve</a>
+            <a href="/bike/details/{{this.bike._id}}" class="btn btn-warning btn-lg btn-block">Detail</a </div>
+        </div>
+    </div>
+    {{/each}}
+</div>

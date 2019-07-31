@@ -1,22 +1,19 @@
 const mongoose = require("mongoose");
-const Schema   = mongoose.Schema;
+const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
-
 
 const bikeSchema = new Schema({
   type: { type: String },
   condition: { type: String },
-  availbility: { type: String },
+  availability: { type: String },
   rentPerDay: { type: String },
-  minRentalDay: { type: Number},
-  location: { type: String},
-  contact: { type: Number},
-  description: {type: String},
-  doc: { data: Buffer, contentType: String },
-  user: { type : ObjectId, ref: 'users' },
-  // booking: [{type: ObjectId, ref: "bookings"}]
+  minRentalDay: { type: Number },
+  location: { type: Number, type: String },
+  description: { type: String },
+  image: { data: Buffer, contentType: String },
+  owner: { type: ObjectId, ref: "users" }
 });
 
-const Bike = mongoose.model("bikes", bikeSchema);
+const bike = mongoose.model("bikes", bikeSchema);
 
-module.exports = Bike;
+module.exports = bike;

@@ -1,0 +1,49 @@
+<h1 class="display-4">List bike for rent</h1>
+<form action="/bike" method="POST" id="bikeform" enctype="multipart/form-data">
+
+    <div class="form-group">
+        <label for="type">Bike Type</label>
+        <select name="type" id="type" class="custom-select custom-select-lg" form="bikeform">
+            <option value="Electric">Electric</option>
+            <option selected value="Oma">Oma</option>
+            <option value="Opa">Opa</option>
+            <option value="Mountain">Mountain</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="condition">Condition</label>
+        <select name="condition" id="condition" class="custom-select custom-select-lg" form="bikeform">
+            <option value="New">New</option>
+            <option selected value="Old">Old</option>
+            <option value="Not so new">Not so new</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="availability">Available from</label>
+        <input type="date" class="form-control" name="availability" id="availability" required>
+    </div>
+    <div class="form-group">
+        <label for="rentPerDay">Rent per day in Euro</label>
+        <input type="number" class="form-control" id="rentPerDay" min="0" name="rentPerDay" required placeholder="Enter rent per day for bike">
+    </div>
+    <div class="form-group">
+        <label for="minRentalDay">Minimum days to rent</label>
+        <input type="number" class="form-control" id="minRentalDay" min="0" name="minRentalDay" required placeholder="Minimum days to be rented">
+    </div>
+    <div class="form-group">
+        <label for="location">Location of bike</label>
+        <input type="text" class="form-control" id="location" name="location" required placeholder="Enter zip code of bike location">
+    </div>
+    <div class="form-group">
+        <label for="description">Any extra details</label>
+        <textarea class="form-control" id="description" name="description" required rows="3"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="image">Upload bike picture</label>
+        <input type="file" name="image" id="image" accept="image/*" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -6,12 +6,12 @@
     </button>
 </div>
 {{/if}}
-<img src="/images/backpic2.jpg"  alt="Responsive image" id="myImage">
+<img src="/images/backpic2.jpg" id="myVideo" alt="" srcset="">
 <div class="content">
     <h1 class="display-4">BikeShare Today</h1>
     <h4>Start sharing your bike today on our first ever consumer to consumer platform</h4>
-    <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="form-inline my-2 my-lg-0" action="/bike/search" method="POST">
+        <input required class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="location">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 </div>

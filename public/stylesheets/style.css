@@ -6,14 +6,21 @@
 }
 
 nav {
-  z-index: 1;
+  z-index: 2;
+  position: fixed !important;
+  width: 100%;
+  top: 0;
+}
+
+.container {
+  padding-top: 72px;
 }
 
 .navbar-brand img {
   width: 48px;
 }
 
-#myImage {
+#myVideo {
   position: fixed;
   top: 50px;
   right: 0;
@@ -56,12 +63,22 @@ nav {
   align-items: start;
 }
 
-.bikelist {
+.bike-list {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
-  padding: 10px;
-  margin-right: 20px;
-  justify-content: space-around;
-  
+  width: 100%;
+}
+
+.bike-card {
+  width: 31%;
+}
+
+@media only screen and (max-width: 600px) {
+  .bike-card {
+    width: 100%;
+  }
+}
+
+.bike-card img {
+  height: 250px;
 }

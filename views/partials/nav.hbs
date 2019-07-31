@@ -9,15 +9,15 @@
     </a>
     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
       <li class="nav-item active">
-        <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link text-success" href="/login">Login</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/signup">SignUp</a>
+        <a class="nav-link text-warning" href="/signup">SignUp</a>
       </li>
 
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="form-inline my-2 my-lg-0" action="/bike/search" method="POST">
+      <input class="form-control mr-sm-2" type="search" required placeholder="Search" aria-label="Search" name="location">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>

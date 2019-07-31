@@ -1,17 +1,16 @@
-const express= require("express");
+const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
-router.get('/', function(req, res, next){
-    res.render('login');
-})
+router.get("/", function(req, res, next) {
+  res.render("login");
+});
 
-router.post('/', (req, res, next) => {
-    let username = req.body.username;
-    let password = req.body.password;
-
-    User.findOne({ username: username })
+router.post("/", (req, res, next) => {
+  let username = req.body.username;
+  let password = req.body.password;
+  User.findOne({ username: username })
     .then(user => {
       if (user === null) {
         res.render("signup", {
@@ -20,9 +19,9 @@ router.post('/', (req, res, next) => {
       } else {
         if (bcrypt.compareSync(password, user.password)) {
           // Save the login in the session!
-          req.session.currentUser = user;
+          req.session.currentUser = {username: user.username, _id:user._id };
           req.app.locals.layout = "layoutlo"; //
-          res.redirect("/");
+          res.redirect("/bike/list");
         } else {
           res.render("login", {
             errorMessage: "Username / Email combination do not exist"
@@ -36,4 +35,3 @@ router.post('/', (req, res, next) => {
 });
 
 module.exports = router;
-
