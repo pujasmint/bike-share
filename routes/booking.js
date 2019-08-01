@@ -14,8 +14,6 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-
-
 router.get("/create/:bikeId/", (req, res, next) => {
   if (!req.session.currentUser) {
     res.render("login", {
@@ -101,7 +99,5 @@ router.get("/finish/:bikeId/", (req, res, next) => {
       });
     });
 });
-
-
 
 module.exports = router;
