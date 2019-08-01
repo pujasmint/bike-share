@@ -1,0 +1,69 @@
+<h1 class="display-4">Bike Details</h1>
+<div class="card m-auto">
+    {{#ifeq status "PENDING"}}
+    <span class="badge badge-primary">Pending</span>
+    {{/ifeq}} {{#ifeq status "BOOKED"}}
+    <span class="badge badge-danger">Booked</span>
+    {{/ifeq}} {{#ifeq status "AVAILABLE"}}
+    <span class="badge badge-success">Available</span>
+    {{/ifeq}} {{#ifeq owner "OWNER"}}
+    <span class="badge badge-warning">OWNER</span>
+    {{/ifeq}}
+    <img class="card-img-top" src="data:image/jpeg;base64,{{imgPath}}" alt="Card image cap">
+
+    <div class="card-body">
+        <h5 class="card-title">
+            <p class="text-secondary">Type: </p>{{bike.type}}
+        </h5>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <p class="text-secondary">Condition: </p>
+            {{bike.condition}}
+        </li>
+        <li class="list-group-item">
+            <p class="text-secondary">Available from: </p>
+            {{bike.availability}}
+        </li>
+        <li class="list-group-item">
+            <p class="text-secondary">Minimal days on rent:</p>
+            {{bike.minRentalDay}}
+        </li>
+        <li class="list-group-item">
+            <p class="text-secondary">Rent per day(Euro):</p>
+            {{bike.rentPerDay}}
+        </li>
+        <li class="list-group-item">
+            <p class="text-secondary">Located at:</p>
+            <a href="https://www.google.com/maps/place/{{bike.location}}">{{bike.location}}</a>
+        </li>
+        <li class="list-group-item">
+            <p class="text-secondary">Additional Details:</p>
+            {{bike.description}}
+        </li>
+        {{#if customer}}
+        <li class="list-group-item">
+            <p class="text-secondary">Bike Customer</p>
+            <a href="/profile/{{customer}}">Visit customer's profile</a>
+        </li>
+        {{/if}}
+        <li class="list-group-item">
+            <p class="text-secondary">Bike Owner</p>
+            <a href="/profile/{{bike.owner}}">Visit owner's profile</a>
+        </li>
+    </ul>
+    <div class="card-body">
+        {{#ifnoteq this.owner "OWNER"}} {{#ifeq status "AVAILABLE"}}
+        <a href="/reserve/create/{{bike._id}}" class="btn btn-success btn-lg m-auto">Reserve</a>
+        {{/ifeq}} {{#ifnoteq status "AVAILABLE"}}
+        <a href="/reserve/create/{{bike._id}}" class="btn btn-secondary disabled btn-lg m-auto">Reserve</a>
+        {{/ifnoteq}} {{/ifnoteq}} {{#ifeq this.owner "OWNER"}} {{#ifeq status "AVAILABLE"}}
+        <a href="/reserve/create/{{bike._id}}" class="btn btn-success btn-lg disabled m-auto">Reserve</a>
+        {{/ifeq}} {{#ifeq status "PENDING"}}
+        <a href="/reserve/confirm/{{bike._id}}" class="btn btn-success btn-lg m-auto">Confirm</a>
+        <a href="/reserve/cancel/{{bike._id}}" class="btn btn-danger btn-lg m-auto">Cancel</a>
+        {{/ifeq}} {{#ifeq status "BOOKED"}}
+        <a href="/reserve/finish/{{bike._id}}" class="btn btn-warning btn-lg m-auto">Finish Booking</a>
+        {{/ifeq}} {{/ifeq}}
+    </div>
+</div>
