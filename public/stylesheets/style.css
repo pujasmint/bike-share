@@ -12,6 +12,16 @@ nav {
   top: 0;
 }
 
+.badge {
+  position: absolute;
+  width: 64px;
+  height: 20px;
+}
+
+.badge-warning {
+  right: 0;
+}
+
 .container {
   padding-top: 72px;
 }
