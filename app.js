@@ -10,13 +10,21 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 var multer = require("multer");
 let upload = multer({ dest: "public/images" });
+const exphbs = require("express-handlebars");
 
 var app = express();
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
+app.engine(
+  "hbs",
+  exphbs({
+    defaultLayout: "layout",
+    extname: ".hbs",
+    helpers: require("./hbshelpers"), // same file that gets used on our client
+    partialsDir: "views/partials/", // same as default, I just like to be explicit
+    layoutsDir: "views" // same as default, I just like to be explicit
+  })
+);
 app.set("view engine", "hbs");
-hbs.registerPartials(__dirname + "/views/partials");
 
 app.use(
   session({
@@ -42,6 +50,7 @@ app.use("/login", require("./routes/login"));
 app.use("/logout", require("./routes/logout"));
 app.use("/profile", require("./routes/profile"));
 app.use("/bike", upload.single("image"), require("./routes/bikes"));
+app.use("/reserve", require("./routes/booking"));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

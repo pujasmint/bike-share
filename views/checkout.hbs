@@ -1,0 +1,13 @@
+<div class="jumbotron">
+    <h1 class="display-4">Hey Biker</h1>
+    <p class="lead">Congrats {{booking.owner.username}} you just made <span class="text-success">{{totalMoney}}</span> on
+        your
+        <a class="text-primary" href="/bike/details/{{booking.bike._id}}">{{booking.bike.type}}</a> bike.</p>
+    <hr class="my-4">
+    <p>Generate invoice for <a class="text-warning" href="/profile/{{booking.customer._id}}">{{booking.customer.username}}</a></p>
+    <button class="btn btn-secondary btn-lg" onclick="window.print();">Print Invoice</button>
+    <hr class="my-4">
+    <p>Choose from below options</p>
+    <a href="/bike" class="btn btn-success btn-lg">Keep sharing bike</a>
+    <a href="/bike/list" class="btn btn-warning btn-lg">Reserve bike</a>
+</div>

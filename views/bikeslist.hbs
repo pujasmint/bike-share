@@ -1,17 +1,43 @@
 <h1 class="display-4">
     {{ listHeading }}</h1>
+{{#if bikes}}
 <div class="bike-list">
     {{#each bikes}}
     <div class="card mb-2 mr-2 bike-card">
+        {{#ifeq this.status "PENDING"}}
+        <span class="badge badge-primary">Pending</span>
+        {{/ifeq}} {{#ifeq this.status "BOOKED"}}
+        <span class="badge badge-danger">Booked</span>
+        {{/ifeq}} {{#ifeq this.status "AVAILABLE"}}
+        <span class="badge badge-success">Available</span>
+        {{/ifeq}} {{#ifeq this.owner "OWNER"}}
+        <span class="badge badge-warning">OWNER</span>
+        {{/ifeq}}
         <img src="data:image/jpeg;base64,{{this.imgPath}}" class="card-img-top">
         <div class="card-body">
             <h5 class="card-title">{{this.bike.type}}</h5>
             <p class="card-text">This is <strong>{{this.bike.type}}</strong> bike in <strong>{{this.bike.condition}}</strong>
                 condition available from {{this.bike.availability}}</p>
 
-            <a href="/reserve/{{this.bike._id}}" class="btn btn-success btn-lg btn-block">Reserve</a>
+            {{#ifeq this.owner "OWNER"}}
+            <a href="/reserve/create/{{this.bike._id}}" class="btn btn-secondary btn-lg btn-block disabled">Reserve</a>
+            {{/ifeq}} {{#ifnoteq this.owner "OWNER"}} {{#ifeq this.status "AVAILABLE"}}
+            <a href="/reserve/create/{{this.bike._id}}" class="btn btn-success btn-lg btn-block">Reserve</a>
+            {{/ifeq}} {{#ifnoteq this.status "AVAILABLE"}}
+            <a href="/reserve/create/{{this.bike._id}}" class="btn btn-secondary btn-lg btn-block disabled">Reserve</a>
+            {{/ifnoteq}} {{/ifnoteq}}
             <a href="/bike/details/{{this.bike._id}}" class="btn btn-warning btn-lg btn-block">Detail</a </div>
         </div>
     </div>
     {{/each}}
 </div>
+{{else}}
+<div class="jumbotron">
+    <h1 class="display-4">Hey Biker</h1>
+    <p class="lead">Your bike list seem to be empty</p>
+    <hr class="my-4">
+    <p>Choose from below options</p>
+    <a href="/bike" class="btn btn-success btn-lg">List bike for sharing</a>
+    <a href="/bike/list" class="btn btn-warning btn-lg">Reserve bike</a>
+</div>
+{{/if}}

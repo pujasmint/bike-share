@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Bike = require("../models/bike");
+const Booking = require("../models/booking");
 const fs = require("fs");
 
 router.get("/", function(req, res, next) {
@@ -14,39 +15,90 @@ router.get("/", function(req, res, next) {
 });
 
 router.get("/list", function(req, res, next) {
-  Bike.find({ }).then(bikes => {
-    const allBikes = bikes.map(bike => {
-      const imgPath = new Buffer(bike.image.data).toString("base64");
-      return { bike, imgPath };
+  Booking.find({})
+    .populate("bike")
+    .then(bookings => {
+      Bike.find({}).then(bikes => {
+        const allBikes = bikes.map(bike => {
+          const bb = bookings.find(book => {
+            return book.bike._id.toString() == bike._id.toString();
+          });
+          const imgPath = new Buffer(bike.image.data).toString("base64");
+          let status = bb ? bb.status : "AVAILABLE";
+          let owner = "NOTOWNER";
+          if (
+            req.session.currentUser &&
+            req.session.currentUser._id.toString() === bike.owner.toString()
+          ) {
+            owner = "OWNER";
+          }
+          return { bike, imgPath, owner, status: status };
+        });
+
+        res.render("bikeslist", {
+          bikes: allBikes,
+          listHeading: `Explore all bikes`
+        });
+      });
     });
-    res.render("bikeslist", {
-      bikes: allBikes,
-      listHeading: `Explore all bikes`
-    });
-  });
 });
 
 router.post("/search", function(req, res, next) {
-  Bike.find({ location: req.body.location }).then(bikes => {
-    const allBikes = bikes.map(bike => {
-      const imgPath = new Buffer(bike.image.data).toString("base64");
-      return { bike, imgPath };
+  Booking.find({})
+    .populate("bike")
+    .then(bookings => {
+      Bike.find({ location: req.body.location }).then(bikes => {
+        const allBikes = bikes.map(bike => {
+          const bb = bookings.find(book => {
+            return book.bike._id.toString() == bike._id.toString();
+          });
+          const imgPath = new Buffer(bike.image.data).toString("base64");
+          let status = bb ? bb.status : "AVAILABLE";
+          let owner = "NOTOWNER";
+          if (
+            req.session.currentUser &&
+            req.session.currentUser._id.toString() === bike.owner.toString()
+          ) {
+            owner = "OWNER";
+          }
+          return { bike, imgPath, owner, status: status };
+        });
+
+        res.render("bikeslist", {
+          bikes: allBikes,
+          listHeading: `Explore all bikes in ${req.body.location} region`
+        });
+      });
     });
-    res.render("bikeslist", {
-      bikes: allBikes,
-      listHeading: `Explore all bikes in ${req.body.location} region`
-    });
-  });
 });
 
 router.get("/details/:bikeid", function(req, res, next) {
-  Bike.findOne({ _id: req.params.bikeid }).then(bike => {
-    const imgPath = new Buffer(bike.image.data).toString("base64");
-    res.render("bikedetails", {
-      bike,
-      imgPath
+  Booking.find({})
+    .populate("bike")
+    .then(bookings => {
+      Bike.findOne({ _id: req.params.bikeid }).then(bike => {
+        const bb = bookings.find(book => {
+          return book.bike._id.toString() == bike._id.toString();
+        });
+        const imgPath = new Buffer(bike.image.data).toString("base64");
+        let status = bb ? bb.status : "AVAILABLE";
+        let customer = bb ? bb.customer : null;
+        let owner = "NOTOWNER";
+        if (
+          req.session.currentUser &&
+          req.session.currentUser._id.toString() === bike.owner.toString()
+        ) {
+          owner = "OWNER";
+        }
+        res.render("bikedetails", {
+          bike,
+          imgPath,
+          status,
+          owner,
+          customer
+        });
+      });
     });
-  });
 });
 
 router.get("/my-bikes", function(req, res, next) {
@@ -55,16 +107,61 @@ router.get("/my-bikes", function(req, res, next) {
       errorMessage: "Login first to see your listed bike"
     });
   } else {
-    Bike.find({ owner: req.session.currentUser._id }).then(bikes => {
-      const allBikes = bikes.map(bike => {
-        const imgPath = new Buffer(bike.image.data).toString("base64");
-        return { bike, imgPath };
+    Booking.find({})
+      .populate("bike")
+      .then(bookings => {
+        Bike.find({ owner: req.session.currentUser._id }).then(bikes => {
+          const allBikes = bikes.map(bike => {
+            const bb = bookings.find(book => {
+              return book.bike._id.toString() == bike._id.toString();
+            });
+            const imgPath = new Buffer(bike.image.data).toString("base64");
+            let status = bb ? bb.status : "AVAILABLE";
+            let owner = "NOTOWNER";
+            if (
+              req.session.currentUser._id.toString() === bike.owner.toString()
+            ) {
+              owner = "OWNER";
+            }
+            return { bike, imgPath, owner, status: status };
+          });
+
+          res.render("bikeslist", {
+            bikes: allBikes,
+            listHeading: `My bikes`
+          });
+        });
       });
-      res.render("bikeslist", {
-        bikes: allBikes,
-        listHeading: `My listed bikes`
-      });
+  }
+});
+
+router.get("/my-bookings", (req, res, next) => {
+  if (!req.session.currentUser) {
+    res.render("login", {
+      errorMessage: "Login first to see your bookings"
     });
+  } else {
+    const customerId = req.session.currentUser._id;
+    Booking.find({ customer: customerId })
+      .populate("bike")
+      .then(bookings => {
+        const cutomerBikes = bookings.map(book => {
+          const bike = book.bike;
+          const imgPath = new Buffer(bike.image.data).toString("base64");
+          let status = book.status;
+          let owner = "NOTOWNER";
+          if (
+            req.session.currentUser._id.toString() === bike.owner.toString()
+          ) {
+            owner = "OWNER";
+          }
+          return { bike, imgPath, status, owner };
+        });
+        res.render("bikeslist", {
+          bikes: cutomerBikes,
+          listHeading: `My Bookings`
+        });
+      });
   }
 });
 
@@ -82,7 +179,7 @@ router.post("/", function(req, res, next) {
   };
   Bike.create(newBike)
     .then(bike => {
-      res.redirect("/my-bikes");
+      res.redirect("/bike/my-bikes");
     })
     .catch(() => {
       res.send("error");
