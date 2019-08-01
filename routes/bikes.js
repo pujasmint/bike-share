@@ -92,6 +92,13 @@ router.get("/details/:bikeid", function(req, res, next) {
         ) {
           owner = "OWNER";
         }
+        console.log('Here', {
+          bike,
+          imgPath,
+          status,
+          owner,
+          customer
+        })
         res.render("bikedetails", {
           bike,
           imgPath,
