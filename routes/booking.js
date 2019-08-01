@@ -4,6 +4,17 @@ const Booking = require("../models/booking");
 const Bike = require("../models/bike");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+ host: 'smtp.gmail.com',
+    auth: {
+       user: `${process.env.user}`,
+       pass: `${process.env.password}`
+    }
+});
+
+
 
 router.get("/create/:bikeId/", (req, res, next) => {
   if (!req.session.currentUser) {
@@ -23,6 +34,22 @@ router.get("/create/:bikeId/", (req, res, next) => {
       console.log(newBooking);
 
       Booking.create(newBooking)
+      .then((booking)=>{
+        var mailOptions = {
+            from: 'bikeshare.today',
+            to: "puja.singh@mitsot.com",
+            subject: `Booking ${booking.id} confirmed`,
+            text: `You booked bike ${booking.bike} from ${booking.owner}`
+          };
+          
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+      })
         .then(() => {
           res.redirect("/bike/my-bookings");
         })
@@ -74,5 +101,7 @@ router.get("/finish/:bikeId/", (req, res, next) => {
       });
     });
 });
+
+
 
 module.exports = router;

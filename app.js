@@ -11,6 +11,8 @@ const MongoStore = require("connect-mongo")(session);
 var multer = require("multer");
 let upload = multer({ dest: "public/images" });
 const exphbs = require("express-handlebars");
+const dotenv = require('dotenv')
+dotenv.config()
 
 var app = express();
 
