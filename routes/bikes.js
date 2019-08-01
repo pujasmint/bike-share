@@ -77,7 +77,7 @@ router.get("/details/:bikeid", function(req, res, next) {
   Booking.find({})
     .populate("bike")
     .then(bookings => {
-      console.log('Here')
+      console.log('Here', req.params.bikeid)
       Bike.findOne({ _id: req.params.bikeid }).then(bike => {
         const bb = bookings.find(book => {
           return book.bike._id.toString() == bike._id.toString();
