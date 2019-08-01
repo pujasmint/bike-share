@@ -73,11 +73,9 @@ router.post("/search", function(req, res, next) {
 });
 
 router.get("/details/:bikeid", function(req, res, next) {
-  console.log('Here Out')
   Booking.find({})
     .populate("bike")
     .then(bookings => {
-      console.log('Here', req.params.bikeid)
       Bike.findOne({ _id: req.params.bikeid }).then(bike => {
         const bb = bookings.find(book => {
           return book.bike._id.toString() == bike._id.toString();
@@ -92,13 +90,6 @@ router.get("/details/:bikeid", function(req, res, next) {
         ) {
           owner = "OWNER";
         }
-        console.log('Here', {
-          bike,
-          imgPath,
-          status,
-          owner,
-          customer
-        })
         res.render("bikedetails", {
           bike,
           imgPath,
