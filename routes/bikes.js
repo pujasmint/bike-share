@@ -73,6 +73,7 @@ router.post("/search", function(req, res, next) {
 });
 
 router.get("/details/:bikeid", function(req, res, next) {
+  console.log('Here Out')
   Booking.find({})
     .populate("bike")
     .then(bookings => {
