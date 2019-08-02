@@ -5,13 +5,30 @@ const Bike = require("../models/bike");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 var nodemailer = require('nodemailer');
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
+
+const oauth2Client = new OAuth2(
+  `${process.env.OAuthID}` // ClientID
+  `${process.env.OAuthSecret}`, // Client Secret
+  "https://developers.google.com/oauthplayground" // Redirect URL
+);
+oauth2Client.setCredentials({
+  refresh_token: `${process.env.refresh_token}`
+});
+
+const accessToken = oauth2Client.getAccessToken()
 
 var transporter = nodemailer.createTransport({
  host: 'smtp.gmail.com',
     auth: {
-       user: `${process.env.user}`,
-       pass: `${process.env.password}`
-    }
+      type: "OAuth2",
+      user: `${process.env.user}`, 
+      clientId: `${process.env.OAuthID}`,
+      clientSecret: `${process.env.OAuthSecret}`,
+      refreshToken: `${process.env.refresh_token}`,
+      accessToken: accessToken
+ }
 });
 
 router.get("/create/:bikeId/", (req, res, next) => {
@@ -35,7 +52,7 @@ router.get("/create/:bikeId/", (req, res, next) => {
       .then((booking)=>{
         var mailOptions = {
             from: 'bikeshare.today',
-            to: "puja.singh@mitsot.com",
+            to: "lloydchambrier@gmail.com",
             subject: `Booking ${booking.id} confirmed`,
             text: `Congratulations Your booking is confirmed: ${booking.bike} from ${booking.owner}`
           };
