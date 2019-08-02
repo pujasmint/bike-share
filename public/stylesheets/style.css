@@ -16,10 +16,12 @@ nav {
   position: absolute;
   width: 64px;
   height: 20px;
+  background-color: red;
 }
 
 .badge-warning {
   right: 0;
+  background-color: yellowgreen;
 }
 
 .container {

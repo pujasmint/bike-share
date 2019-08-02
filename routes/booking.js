@@ -37,7 +37,7 @@ router.get("/create/:bikeId/", (req, res, next) => {
             from: 'bikeshare.today',
             to: "puja.singh@mitsot.com",
             subject: `Booking ${booking.id} confirmed`,
-            text: `You booked bike ${booking.bike} from ${booking.owner}`
+            text: `Congratulations Your booking is confirmed: ${booking.bike} from ${booking.owner}`
           };
           
           transporter.sendMail(mailOptions, function(error, info){
